@@ -28,7 +28,9 @@ const ThoughtBubble = ({ thought }) => {
       </div>
       {isExpanded && (
         <div className="allm-mt-2 allm-mb-3 allm-pl-0 allm-border-l-2 allm-border-gray-200">
-          <div className="allm-text-xs allm-text-gray-600 allm-font-mono allm-whitespace-pre-wrap">{thought.trim()}</div>
+          <div className="allm-text-xs allm-text-gray-600 allm-font-mono allm-whitespace-pre-wrap">
+            {thought.trim()}
+          </div>
         </div>
       )}
     </div>
@@ -55,18 +57,21 @@ const HistoricalMessage = forwardRef(
 
     // Extract content between think tags if they exist
     const thinkMatches = message?.match(/<think>([\s\S]*?)<\/think>/g) || [];
-    const thoughts = thinkMatches.map(match =>
-      match.replace(/<think>|<\/think>/g, '').trim()
+    const thoughts = thinkMatches.map((match) =>
+      match.replace(/<think>|<\/think>/g, "").trim()
     );
 
     // Get the response content without the think tags
-    const responseContent = message?.replace(/<think>[\s\S]*?<\/think>/g, "").trim();
+    const responseContent = message
+      ?.replace(/<think>[\s\S]*?<\/think>/g, "")
+      .trim();
 
     return (
       <div className="allm-py-[5px]">
         {role === "assistant" && (
           <div className="allm-text-[10px] allm-text-gray-400 allm-ml-[54px] allm-mr-6 allm-mb-2 allm-text-left allm-font-sans">
-            {embedderSettings.settings.assistantName || "Anything LLM Chat Assistant"}
+            {embedderSettings.settings.assistantName ||
+              "Anything LLM Chat Assistant"}
           </div>
         )}
         <div
@@ -119,7 +124,9 @@ const HistoricalMessage = forwardRef(
                   <span
                     className={`allm-whitespace-pre-line allm-flex allm-flex-col allm-gap-y-1 ${textSize} allm-leading-[20px]`}
                     dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(renderMarkdown(responseContent || message)),
+                      __html: DOMPurify.sanitize(
+                        renderMarkdown(responseContent || message)
+                      ),
                     }}
                   />
                 </>

@@ -21,7 +21,7 @@ const ThoughtBubble = ({ thought }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   if (!thought || !embedderSettings.settings.showThoughts) return null;
 
-  const cleanThought = thought.replace(/<\/?think>/g, '').trim();
+  const cleanThought = thought.replace(/<\/?think>/g, "").trim();
 
   return (
     <div className="allm-mb-2">
@@ -38,7 +38,9 @@ const ThoughtBubble = ({ thought }) => {
       </div>
       {isExpanded && (
         <div className="allm-mt-2 allm-mb-3 allm-pl-0 allm-border-l-2 allm-border-gray-200">
-          <div className="allm-text-xs allm-text-gray-600 allm-font-mono allm-whitespace-pre-wrap">{cleanThought}</div>
+          <div className="allm-text-xs allm-text-gray-600 allm-font-mono allm-whitespace-pre-wrap">
+            {cleanThought}
+          </div>
         </div>
       )}
     </div>
@@ -52,28 +54,38 @@ const PromptReply = forwardRef(
 
     // Extract content between think tags if they exist
     const thinkMatches = reply?.match(/<think>([\s\S]*?)<\/think>/g) || [];
-    const thoughts = thinkMatches.map(match => match.replace(/<\/?think>/g, '').trim());
+    const thoughts = thinkMatches.map((match) =>
+      match.replace(/<\/?think>/g, "").trim()
+    );
 
-    const hasIncompleteThinkTag = reply?.includes("<think>") && !reply?.includes("</think>");
+    const hasIncompleteThinkTag =
+      reply?.includes("<think>") && !reply?.includes("</think>");
 
     // For incomplete think tags during streaming, extract the content after the opening tag
-    const streamingThought = hasIncompleteThinkTag ?
-      reply?.split('<think>').pop()?.replace(/<\/?think>/g, '').trim() : null;
+    const streamingThought = hasIncompleteThinkTag
+      ? reply
+          ?.split("<think>")
+          .pop()
+          ?.replace(/<\/?think>/g, "")
+          .trim()
+      : null;
 
     const lastThought = streamingThought || thoughts[thoughts.length - 1];
     const isThinking = hasIncompleteThinkTag || pending;
 
     // Get the response content without the think tags - clean more aggressively
-    const responseContent = reply?.replace(/<think>[\s\S]*?<\/think>/g, "")  // Remove complete think blocks
-      .replace(/<think>.*$/g, "")  // Remove any incomplete think blocks at the end
-      .replace(/<\/?think>/g, "")  // Remove any stray think tags
+    const responseContent = reply
+      ?.replace(/<think>[\s\S]*?<\/think>/g, "") // Remove complete think blocks
+      .replace(/<think>.*$/g, "") // Remove any incomplete think blocks at the end
+      .replace(/<\/?think>/g, "") // Remove any stray think tags
       .trim();
 
     if (isThinking) {
       return (
         <div className="allm-py-[5px]">
           <div className="allm-text-[10px] allm-text-gray-400 allm-ml-[54px] allm-mr-6 allm-mb-2 allm-text-left allm-font-sans">
-            {embedderSettings.settings.assistantName || "Anything LLM Chat Assistant"}
+            {embedderSettings.settings.assistantName ||
+              "Anything LLM Chat Assistant"}
           </div>
           <div className="allm-flex allm-items-start allm-w-full allm-h-fit allm-justify-start">
             <img
@@ -88,7 +100,9 @@ const PromptReply = forwardRef(
               }}
               className={`allm-py-[11px] allm-px-4 allm-flex allm-flex-col ${embedderSettings.ASSISTANT_STYLES.base} allm-shadow-[0_4px_14px_rgba(0,0,0,0.25)]`}
             >
-              {hasIncompleteThinkTag && streamingThought && <ThoughtBubble thought={streamingThought} />}
+              {hasIncompleteThinkTag && streamingThought && (
+                <ThoughtBubble thought={streamingThought} />
+              )}
               <ThinkingIndicator hasThought={hasIncompleteThinkTag} />
             </div>
           </div>
@@ -100,7 +114,8 @@ const PromptReply = forwardRef(
       return (
         <div className="allm-py-[5px]">
           <div className="allm-text-[10px] allm-text-gray-400 allm-ml-[54px] allm-mr-6 allm-mb-2 allm-text-left allm-font-sans">
-            {embedderSettings.settings.assistantName || "Anything LLM Chat Assistant"}
+            {embedderSettings.settings.assistantName ||
+              "Anything LLM Chat Assistant"}
           </div>
           <div className="allm-flex allm-items-start allm-w-full allm-h-fit allm-justify-start">
             <img
@@ -125,7 +140,8 @@ const PromptReply = forwardRef(
     return (
       <div className="allm-py-[5px]">
         <div className="allm-text-[10px] allm-text-gray-400 allm-ml-[54px] allm-mr-6 allm-mb-2 allm-text-left allm-font-sans">
-          {embedderSettings.settings.assistantName || "Anything LLM Chat Assistant"}
+          {embedderSettings.settings.assistantName ||
+            "Anything LLM Chat Assistant"}
         </div>
         <div
           key={uuid}
@@ -144,11 +160,15 @@ const PromptReply = forwardRef(
             }}
             className={`allm-py-[11px] allm-px-4 allm-flex allm-flex-col ${embedderSettings.ASSISTANT_STYLES.base} allm-shadow-[0_4px_14px_rgba(0,0,0,0.25)]`}
           >
-            {thoughts.length > 0 && <ThoughtBubble thought={thoughts.join("\n\n")} />}
+            {thoughts.length > 0 && (
+              <ThoughtBubble thought={thoughts.join("\n\n")} />
+            )}
             <div className="allm-flex allm-gap-x-5">
               <span
                 className="allm-font-sans allm-reply allm-whitespace-pre-line allm-font-normal allm-text-sm allm-md:text-sm allm-flex allm-flex-col allm-gap-y-1"
-                dangerouslySetInnerHTML={{ __html: renderMarkdown(responseContent || "") }}
+                dangerouslySetInnerHTML={{
+                  __html: renderMarkdown(responseContent || ""),
+                }}
               />
             </div>
           </div>
