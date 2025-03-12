@@ -101,6 +101,8 @@ REQUIRED data attributes:
 
 - `data-open-on-load` — Once loaded, open the chat as default. It can still be closed by the user. To enable set this attribute to `on`. All other values will be ignored.
 
+- `data-show-thoughts` — Allow users to see the AI's thought process in responses. If set to "false", users will only see the thinking state. Defaults to "true".
+
 - `data-support-email` — Shows a support email that the user can used to draft an email via the "three dot" menu in the top right. Option will not appear if it is not set.
 
 ### `<iframe>` tag HTML embed
