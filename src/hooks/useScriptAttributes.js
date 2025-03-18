@@ -26,6 +26,7 @@ const DEFAULT_SETTINGS = {
   windowHeight: null, // height of chat window in number:css-prefix
   windowWidth: null, // width of chat window in number:css-prefix
   textSize: null, // text size in px (number only)
+  noHeader: null, // If set, hide the header above the chatbox
 
   // behaviors
   openOnLoad: "off", // or "on"
