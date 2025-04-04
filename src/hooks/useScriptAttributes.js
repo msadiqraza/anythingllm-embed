@@ -9,6 +9,7 @@ const DEFAULT_SETTINGS = {
   prompt: null, // override
   model: null, // override
   temperature: null, //override
+  showThoughts: false, // show the AI's thought process in responses.
 
   // style parameters
   chatIcon: "plus",
