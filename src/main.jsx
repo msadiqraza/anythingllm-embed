@@ -21,7 +21,6 @@ root.render(
 export const embedderSettings = {
   settings: {
     ...scriptSettings,
-    showThoughts: scriptSettings.showThoughts !== "false",
   },
   stylesSrc: parseStylesSrc(document?.currentScript?.src),
   USER_STYLES: {
