@@ -3,11 +3,9 @@ import { Warning, CaretDown } from "@phosphor-icons/react";
 import renderMarkdown from "@/utils/chat/markdown";
 import { embedderSettings } from "@/main";
 import { v4 } from "uuid";
-import createDOMPurify from "dompurify";
+import { sanitizeHtml } from "@/utils/chat/sanitize";
 import AnythingLLMIcon from "@/assets/anything-llm-icon.svg";
 import { formatDate } from "@/utils/date";
-
-const DOMPurify = createDOMPurify(window);
 
 const ThoughtBubble = ({ thought }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -124,7 +122,7 @@ const HistoricalMessage = forwardRef(
                   <span
                     className={`allm-whitespace-pre-line allm-flex allm-flex-col allm-gap-y-1 ${textSize} allm-leading-[20px]`}
                     dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(
+                      __html: sanitizeHtml(
                         renderMarkdown(responseContent || message)
                       ),
                     }}
