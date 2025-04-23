@@ -2,6 +2,7 @@ import { encode as HTMLEncode } from "he";
 import markdownIt from "markdown-it";
 import { staticHljs as hljs } from "./hljs";
 import { v4 } from "uuid";
+import DOMPurify from "./purify";
 
 const markdown = markdownIt({
   html: false,
@@ -44,6 +45,13 @@ const markdown = markdownIt({
   // Enable <ol> and <ul> items to not assume an HTML structure so we can keep numbering from responses.
   .disable("list");
 
+// Custom renderer rule to make links open in new tab
+markdown.renderer.rules.link_open = (tokens, idx) => {
+  const token = tokens[idx];
+  const href = token.attrs.find((attr) => attr[0] === "href");
+  return `<a href="${href[1]}" target="_blank" rel="noopener noreferrer">`;
+};
+
 export default function renderMarkdown(text = "") {
-  return markdown.render(text);
+  return DOMPurify.sanitize(markdown.render(text));
 }
