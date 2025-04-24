@@ -1,5 +1,7 @@
 import { CircleNotch, PaperPlaneRight } from "@phosphor-icons/react";
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { embedderSettings } from "@/main.jsx";
 
 export default function PromptInput({
   message,
@@ -8,6 +10,7 @@ export default function PromptInput({
   inputDisabled,
   buttonDisabled,
 }) {
+  const { t } = useTranslation();
   const formRef = useRef(null);
   const textareaRef = useRef(null);
   const [_, setFocused] = useState(false);
@@ -71,7 +74,10 @@ export default function PromptInput({
                 }}
                 value={message}
                 className="allm-font-sans allm-border-none allm-cursor-text allm-max-h-[100px] allm-text-[14px] allm-mx-2 allm-py-2 allm-w-full allm-text-black allm-bg-transparent placeholder:allm-text-slate-800/60 allm-resize-none active:allm-outline-none focus:allm-outline-none allm-flex-grow"
-                placeholder={"Send a message"}
+                placeholder={
+                  embedderSettings.settings.sendMessageText ||
+                  t("chat.send-message")
+                }
                 id="message-input"
               />
               <button

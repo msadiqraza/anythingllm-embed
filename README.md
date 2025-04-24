@@ -61,6 +61,10 @@ REQUIRED data attributes:
 
 - `data-temperature` — Override the chat model temperature. This must be a valid value for your AnythingLLM LLM provider. If unset it will use the embeds attached workspace model temperature or the system setting.
 
+**Language & Localization**
+
+- `data-language` — Set the language for the chat interface. If not specified, it will default to English (en). Currently supported languages: en (English).
+
 **Style Overrides**
 
 - `data-chat-icon` — The chat bubble icon show when chat is closed. Options are `plus`, `chatBubble`, `support`, `search2`, `search`, `magic`.
@@ -96,6 +100,10 @@ REQUIRED data attributes:
 - `data-username` - A specific readable name or identifier for the client for your reference. Will be shown in AnythingLLM chat logs. If empty it will not be reported.
 
 - `data-default-messages` - A string of comma-separated messages you want to display to the user when the chat widget has no history. Example: `"How are you?, What is so interesting about this project?, Tell me a joke."`
+
+- `data-send-message-text` — Override the placeholder text in the message input field. If not specified, it will use the translated text based on the selected language.
+
+- `data-reset-chat-text` — Override the text shown on the reset chat button. If not specified, it will use the translated text based on the selected language.
 
 **Behavior Overrides**
 
