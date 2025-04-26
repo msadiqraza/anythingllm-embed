@@ -11,33 +11,35 @@ const markdown = markdownIt({
     if (lang && hljs.getLanguage(lang)) {
       try {
         return (
-          `<div class="whitespace-pre-line w-full rounded-lg bg-black-900 pb-4 relative font-mono font-normal text-sm text-slate-200">
-          <div class="w-full flex items-center absolute top-0 left-0 text-slate-200 bg-stone-800 px-4 py-2 text-xs font-sans justify-between rounded-t-md">
-            <div class="flex gap-2"><code class="text-xs">${lang}</code></div>
-            <button data-code-snippet data-code="code-${uuid}" class="flex items-center gap-x-2">
-              <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-              <p>Copy</p>
-            </button>
-          </div>
-        <pre class="whitespace-pre-wrap px-2">` +
+          `<div class="allm-w-full allm-rounded-lg allm-bg-[#1e1e1e] allm-font-mono allm-text-sm allm-text-[#d4d4d4] allm-mb-4 allm-relative">
+            <div class="allm-absolute allm-top-0 allm-left-0 allm-right-0 allm-flex allm-items-center allm-justify-between allm-px-4 allm-py-1 allm-text-xs allm-font-sans allm-bg-[#2d2d2d] allm-rounded-t-lg">
+              <span class="allm-text-xs allm-text-[#858585] allm-font-medium">${lang}</span>
+              <button data-code-snippet data-code="code-${uuid}" class="allm-min-w-[52px] allm-h-[22px] allm-flex allm-items-center allm-justify-center allm-gap-x-1 allm-bg-[#ffffff14] allm-text-[#858585] hover:allm-text-white hover:allm-bg-[#ffffff20] allm-px-1.5 allm-rounded allm-transition-colors allm-cursor-pointer">
+                <svg class="allm-h-3 allm-w-3" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M8 17.929H6c-1.105 0-2-.912-2-2.036V5.036C4 3.912 4.895 3 6 3h8c1.105 0 2 .912 2 2.036v1.866m-6 .17h8c1.105 0 2 .91 2 2.035v10.857C20 21.088 19.105 22 18 22h-8c-1.105 0-2-.911-2-2.036V9.107c0-1.124.895-2.036 2-2.036z"/></svg>
+                <span class="allm-text-xs">Copy</span>
+              </button>
+            </div>
+            <div class="allm-overflow-x-auto allm-max-w-full">
+              <pre class="allm-px-4 -allm-mt-10 allm-whitespace-pre-wrap allm-break-words"><code class="allm-max-w-full allm-inline-block">` +
           hljs.highlight(code, { language: lang, ignoreIllegals: true }).value +
-          "</pre></div>"
+          "</code></pre></div></div>"
         );
       } catch (__) {}
     }
 
     return (
-      `<div class="whitespace-pre-line w-full rounded-lg bg-black-900 pb-4 relative font-mono font-normal text-sm text-slate-200">
-        <div class="w-full flex items-center absolute top-0 left-0 text-slate-200 bg-stone-800 px-4 py-2 text-xs font-sans justify-between rounded-t-md">
-          <div class="flex gap-2"><code class="text-xs"></code></div>
-          <button data-code-snippet data-code="code-${uuid}" class="flex items-center gap-x-2">
-            <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-            <p>Copy</p>
+      `<div class="allm-w-full allm-rounded-lg allm-bg-[#1e1e1e] allm-font-mono allm-text-sm allm-text-[#d4d4d4] allm-mb-4 allm-relative">
+        <div class="allm-absolute allm-top-0 allm-left-0 allm-right-0 allm-flex allm-items-center allm-justify-between allm-px-4 allm-py-1 allm-text-xs allm-font-sans allm-bg-[#2d2d2d] allm-rounded-t-lg">
+          <span class="allm-text-xs allm-text-[#858585] allm-font-medium">plaintext</span>
+          <button data-code-snippet data-code="code-${uuid}" class="allm-min-w-[52px] allm-h-[22px] allm-flex allm-items-center allm-justify-center allm-gap-x-1 allm-bg-[#ffffff14] allm-text-[#858585] hover:allm-text-white hover:allm-bg-[#ffffff20] allm-px-1.5 allm-rounded allm-transition-colors allm-cursor-pointer">
+            <svg class="allm-h-3 allm-w-3" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M8 17.929H6c-1.105 0-2-.912-2-2.036V5.036C4 3.912 4.895 3 6 3h8c1.105 0 2 .912 2 2.036v1.866m-6 .17h8c1.105 0 2 .91 2 2.035v10.857C20 21.088 19.105 22 18 22h-8c-1.105 0-2-.911-2-2.036V9.107c0-1.124.895-2.036 2-2.036z"/></svg>
+            <span class="allm-text-xs">Copy</span>
           </button>
         </div>
-      <pre class="whitespace-pre-wrap px-2">` +
+        <div class="allm-overflow-x-auto allm-max-w-full">
+          <pre class="allm-px-4 -allm-mt-10 allm-whitespace-pre-wrap allm-break-words"><code class="allm-max-w-full allm-inline-block">` +
       HTMLEncode(code) +
-      "</pre></div>"
+      "</code></pre></div></div>"
     );
   },
 })
