@@ -136,6 +136,7 @@ export default function ChatContainer({
       </div>
       <div className="allm-flex-shrink-0 allm-mt-auto">
         <PromptInput
+          settings={settings}
           message={message}
           submit={handleSubmit}
           onChange={handleMessageChange}

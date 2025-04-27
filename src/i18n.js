@@ -16,9 +16,10 @@ export function initI18n(settings) {
       defaultNS,
       resources,
       load: "languageOnly",
+      lowerCaseLng: true,
       detection: {
-        order: ["querystring", "navigator"],
-        lookupQuerystring: "lng",
+        order: ["localStorage", "navigator"],
+        lookupLocalStorage: "allm_embed_language",
       },
       interpolation: {
         escapeValue: false,
