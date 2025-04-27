@@ -12,7 +12,9 @@
     "build:publish": "yarn build:publish:js && yarn build:publish:css",
     "build:publish:js": "yarn build && mkdir -p ../frontend/public/embed && cp -r dist/anythingllm-chat-widget.min.js ../frontend/public/embed/anythingllm-chat-widget.min.js",
     "build:publish:css": "cp -r dist/anythingllm-chat-widget.min.css ../frontend/public/embed/anythingllm-chat-widget.min.css",
-    "lint": "yarn prettier --ignore-path ../.prettierignore --write ./src"
+    "lint": "yarn prettier --ignore-path ../.prettierignore --write ./src",
+    "verify:translations": "cd src/locales && node verifyTranslations.mjs",
+    "normalize:translations": "cd src/locales && node normalizeEn.mjs"
   },
   "dependencies": {
     "@microsoft/fetch-event-source": "^2.0.1",
@@ -24,7 +26,10 @@
     "markdown-it": "^13.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "i18next": "^23.11.3",
+    "react-i18next": "^14.1.1",
+    "i18next-browser-languagedetector": "^7.2.1"
   },
   "devDependencies": {
     "@rollup/plugin-image": "^3.0.3",

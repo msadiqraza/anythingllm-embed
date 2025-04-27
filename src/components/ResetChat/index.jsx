@@ -1,6 +1,9 @@
 import ChatService from "@/models/chatService";
+import { useTranslation } from "react-i18next";
 
 export default function ResetChat({ setChatHistory, settings, sessionId }) {
+  const { t } = useTranslation();
+
   const handleChatReset = async () => {
     await ChatService.resetEmbedChatSession(settings, sessionId);
     setChatHistory([]);
@@ -13,7 +16,7 @@ export default function ResetChat({ setChatHistory, settings, sessionId }) {
         className="hover:allm-cursor-pointer allm-border-none allm-text-sm allm-bg-transparent hover:allm-opacity-80 hover:allm-underline"
         onClick={() => handleChatReset()}
       >
-        Reset Chat
+        {settings.resetChatText || t("chat.reset-chat")}
       </button>
     </div>
   );
