@@ -51,7 +51,7 @@ REQUIRED data attributes:
 ></script>
 ```
 
-### `<script>` Customization Options
+## `<script>` Customization Options
 
 **LLM Overrides**
 
@@ -63,7 +63,7 @@ REQUIRED data attributes:
 
 **Language & Localization**
 
-- `data-language` — Set the language for the chat interface. If not specified, it will default to English (en). Currently supported languages: en (English).
+- `data-language` — Set the language for the chat interface. If not specified, it will default to English (en). [Currently supported languages are available here](https://github.com/Mintplex-Labs/anythingllm-embed/main/src/locales/resources.js). (PR's welcome)
 
 **Style Overrides**
 
@@ -101,9 +101,9 @@ REQUIRED data attributes:
 
 - `data-default-messages` - A string of comma-separated messages you want to display to the user when the chat widget has no history. Example: `"How are you?, What is so interesting about this project?, Tell me a joke."`
 
-- `data-send-message-text` — Override the placeholder text in the message input field. If not specified, it will use the translated text based on the selected language.
+- `data-send-message-text` — Override the placeholder text in the message input field.
 
-- `data-reset-chat-text` — Override the text shown on the reset chat button. If not specified, it will use the translated text based on the selected language.
+- `data-reset-chat-text` — Override the text shown on the reset chat button.
 
 **Behavior Overrides**
 
