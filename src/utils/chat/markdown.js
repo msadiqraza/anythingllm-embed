@@ -44,6 +44,13 @@ const markdown = markdownIt({
   // Enable <ol> and <ul> items to not assume an HTML structure so we can keep numbering from responses.
   .disable("list");
 
+// Custom renderer rule to make links open in new tab
+markdown.renderer.rules.link_open = (tokens, idx) => {
+  const token = tokens[idx];
+  const href = token.attrs.find((attr) => attr[0] === "href");
+  return `<a href="${href[1]}" target="_blank" rel="noopener noreferrer">`;
+};
+
 export default function renderMarkdown(text = "") {
   return markdown.render(text);
 }
