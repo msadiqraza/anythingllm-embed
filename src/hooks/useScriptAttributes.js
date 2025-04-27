@@ -31,7 +31,6 @@ const DEFAULT_SETTINGS = {
   language: "en", // language of chat interface
   sendMessageText: null, // override text for send message button
   resetChatText: null, // override text for reset chat button
-  noHeader: false, // If set, hide the header above the chatbox
 
   // behaviors
   openOnLoad: "off", // or "on"
