@@ -5,6 +5,8 @@ import Head from "@/components/Head";
 import OpenButton from "@/components/OpenButton";
 import ChatWindow from "./components/ChatWindow";
 import { useEffect } from "react";
+import { I18nextProvider } from "react-i18next";
+import i18next from "@/i18n";
 
 export default function App() {
   const { isChatOpen, toggleOpenChat } = useOpenChat();
@@ -31,7 +33,7 @@ export default function App() {
   const windowHeight = embedSettings.windowHeight ?? "700px";
 
   return (
-    <>
+    <I18nextProvider i18n={i18next}>
       <Head />
       <div
         id="anything-llm-embed-chat-container"
@@ -67,6 +69,6 @@ export default function App() {
           />
         </div>
       )}
-    </>
+    </I18nextProvider>
   );
 }
