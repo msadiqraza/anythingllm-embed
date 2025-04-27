@@ -51,7 +51,7 @@ REQUIRED data attributes:
 ></script>
 ```
 
-### `<script>` Customization Options
+## `<script>` Customization Options
 
 **LLM Overrides**
 
@@ -60,6 +60,10 @@ REQUIRED data attributes:
 - `data-model` — Override the chat model used for responses. This must be a valid model string for your AnythingLLM LLM provider. If unset it will use the embeds attached workspace model selection or the system setting.
 
 - `data-temperature` — Override the chat model temperature. This must be a valid value for your AnythingLLM LLM provider. If unset it will use the embeds attached workspace model temperature or the system setting.
+
+**Language & Localization**
+
+- `data-language` — Set the language for the chat interface. If not specified, it will default to English (en). [Currently supported languages are available here](https://github.com/Mintplex-Labs/anythingllm-embed/main/src/locales/resources.js). (PR's welcome)
 
 **Style Overrides**
 
@@ -99,9 +103,15 @@ REQUIRED data attributes:
 
 - `data-default-messages` - A string of comma-separated messages you want to display to the user when the chat widget has no history. Example: `"How are you?, What is so interesting about this project?, Tell me a joke."`
 
+- `data-send-message-text` — Override the placeholder text in the message input field.
+
+- `data-reset-chat-text` — Override the text shown on the reset chat button.
+
 **Behavior Overrides**
 
 - `data-open-on-load` — Once loaded, open the chat as default. It can still be closed by the user. To enable set this attribute to `on`. All other values will be ignored.
+
+- `data-show-thoughts` — Allow users to see the AI's thought process, if applicable, in responses. If set to "false", users will only see a static "Thinking" indication without the explict thought content. If "true" the user will see the full thought content as well as the real response. Defaults to "false".
 
 - `data-support-email` — Shows a support email that the user can used to draft an email via the "three dot" menu in the top right. Option will not appear if it is not set.
 

@@ -9,6 +9,7 @@ const DEFAULT_SETTINGS = {
   prompt: null, // override
   model: null, // override
   temperature: null, //override
+  showThoughts: false, // show the AI's thought process in responses.
 
   // style parameters
   chatIcon: "plus",
@@ -27,6 +28,9 @@ const DEFAULT_SETTINGS = {
   windowWidth: null, // width of chat window in number:css-prefix
   textSize: null, // text size in px (number only)
   noHeader: null, // If set, hide the header above the chatbox
+  language: "en", // language of chat interface
+  sendMessageText: null, // override text for send message button
+  resetChatText: null, // override text for reset chat button
 
   // behaviors
   openOnLoad: "off", // or "on"

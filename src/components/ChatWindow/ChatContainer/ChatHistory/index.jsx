@@ -48,7 +48,7 @@ export default function ChatHistory({ settings = {}, history = [] }) {
 
   if (history.length === 0) {
     return (
-      <div className="allm-pb-[100px] allm-pt-[5px] allm-rounded-lg allm-px-2 allm-h-full allm-mt-2 allm-gap-y-2 allm-overflow-y-scroll allm-flex allm-flex-col allm-justify-start allm-no-scroll">
+      <div className="allm-h-full allm-overflow-y-auto allm-px-2 allm-py-4 allm-flex allm-flex-col allm-justify-start allm-no-scroll">
         <div className="allm-flex allm-h-full allm-flex-col allm-items-center allm-justify-center">
           <p className="allm-text-slate-400 allm-text-sm allm-font-sans allm-py-4 allm-text-center">
             {settings?.greeting ?? "Send a chat to get started."}
@@ -61,52 +61,54 @@ export default function ChatHistory({ settings = {}, history = [] }) {
 
   return (
     <div
-      className="allm-pb-[30px] allm-pt-[5px] allm-rounded-lg allm-px-2 allm-h-full allm-gap-y-2 allm-overflow-y-scroll allm-flex allm-flex-col allm-justify-start allm-no-scroll allm-md:max-h-[500px]"
+      className="allm-h-full allm-overflow-y-auto allm-px-2 allm-pt-4 allm-pb-8 allm-flex allm-flex-col allm-justify-start allm-no-scroll"
       id="chat-history"
       ref={chatHistoryRef}
     >
-      {history.map((props, index) => {
-        const isLastMessage = index === history.length - 1;
-        const isLastBotReply =
-          index === history.length - 1 && props.role === "assistant";
+      <div className="allm-flex allm-flex-col allm-gap-y-4">
+        {history.map((props, index) => {
+          const isLastMessage = index === history.length - 1;
+          const isLastBotReply =
+            index === history.length - 1 && props.role === "assistant";
 
-        if (isLastBotReply && props.animate) {
+          if (isLastBotReply && props.animate) {
+            return (
+              <PromptReply
+                key={props.uuid}
+                ref={isLastMessage ? replyRef : null}
+                uuid={props.uuid}
+                reply={props.content}
+                pending={props.pending}
+                sources={props.sources}
+                error={props.error}
+                closed={props.closed}
+              />
+            );
+          }
+
           return (
-            <PromptReply
-              key={props.uuid}
+            <HistoricalMessage
+              key={index}
               ref={isLastMessage ? replyRef : null}
-              uuid={props.uuid}
-              reply={props.content}
-              pending={props.pending}
+              message={props.content}
+              sentAt={props.sentAt || Date.now() / 1000}
+              role={props.role}
               sources={props.sources}
+              chatId={props.chatId}
+              feedbackScore={props.feedbackScore}
               error={props.error}
-              closed={props.closed}
+              errorMsg={props.errorMsg}
             />
           );
-        }
-
-        return (
-          <HistoricalMessage
-            key={index}
-            ref={isLastMessage ? replyRef : null}
-            message={props.content}
-            sentAt={props.sentAt || Date.now() / 1000}
-            role={props.role}
-            sources={props.sources}
-            chatId={props.chatId}
-            feedbackScore={props.feedbackScore}
-            error={props.error}
-            errorMsg={props.errorMsg}
-          />
-        );
-      })}
+        })}
+      </div>
       {!isAtBottom && (
         <div className="allm-fixed allm-bottom-[10rem] allm-right-[50px] allm-z-50 allm-cursor-pointer allm-animate-pulse">
           <div className="allm-flex allm-flex-col allm-items-center">
-            <div className="allm-p-1 allm-rounded-full allm-border allm-border-white/10 allm-bg-black/20 hover:allm-bg-black/50">
+            <div className="allm-rounded-full allm-border allm-border-white/10 allm-bg-black/20 hover:allm-bg-black/50 allm-w-8 allm-h-8 allm-flex allm-items-center allm-justify-center">
               <ArrowDown
                 weight="bold"
-                className="allm-text-white/50 allm-w-5 allm-h-5"
+                className="allm-text-white/50 allm-w-4 allm-h-4"
                 onClick={scrollToBottom}
                 id="scroll-to-bottom-button"
                 aria-label="Scroll to bottom"
