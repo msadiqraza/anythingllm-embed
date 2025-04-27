@@ -1,6 +1,7 @@
 import React, { memo, forwardRef, useState } from "react";
 import { Warning, CaretDown } from "@phosphor-icons/react";
 import renderMarkdown from "@/utils/chat/markdown";
+import DOMPurify from "@/utils/chat/purify";
 import { embedderSettings } from "@/main";
 import { v4 } from "uuid";
 import AnythingLLMIcon from "@/assets/anything-llm-icon.svg";
@@ -121,7 +122,9 @@ const HistoricalMessage = forwardRef(
                   <span
                     className={`allm-whitespace-pre-line allm-flex allm-flex-col allm-gap-y-1 ${textSize} allm-leading-[20px]`}
                     dangerouslySetInnerHTML={{
-                      __html: renderMarkdown(responseContent || message),
+                      __html: DOMPurify.sanitize(
+                        renderMarkdown(responseContent || message)
+                      ),
                     }}
                   />
                 </>

@@ -2,7 +2,6 @@ import { encode as HTMLEncode } from "he";
 import markdownIt from "markdown-it";
 import { staticHljs as hljs } from "./hljs";
 import { v4 } from "uuid";
-import DOMPurify from "./purify";
 
 const markdown = markdownIt({
   html: false,
@@ -53,5 +52,5 @@ markdown.renderer.rules.link_open = (tokens, idx) => {
 };
 
 export default function renderMarkdown(text = "") {
-  return DOMPurify.sanitize(markdown.render(text));
+  return markdown.render(text);
 }
