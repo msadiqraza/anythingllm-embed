@@ -17,7 +17,6 @@ export default function ChatWindowHeader({
   closeChat,
   setChatHistory,
 }) {
-  
   const [showingOptions, setShowOptions] = useState(false);
   const menuRef = useRef();
   const buttonRef = useRef();
@@ -43,24 +42,6 @@ export default function ChatWindowHeader({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuRef]);
-
-  if (!!settings.noHeader) return (
-    <div
-      style={{ borderBottom: "1px solid #E9E9E9;" }}
-      className="allm-flex allm-items-right allm-relative allm-rounded-t-2xl"
-      id="anything-llm-header"
-    >
-    <span style={{ width: "100%" }}>&nbsp;</span>
-    <button
-      type="button"
-      onClick={closeChat}
-      className="allm-bg-transparent hover:allm-cursor-pointer allm-border-none hover:allm-bg-gray-100 allm-rounded-sm allm-text-slate-800/60"
-      aria-label="Close"
-    >
-          <X size={20} weight="bold" />
-        </button>
-      </div>
-   );
 
   return (
     <div
