@@ -4,6 +4,11 @@ on:
   push:
     tags:
       - 'v*.*.*' # Trigger on version tags like v1.0.0
+    branches:
+      - main # Adjust if your fork's primary branch name is different
+      
+  # Add this section to enable manual triggering
+  workflow_dispatch:
 
 jobs:
   build-and-release:
