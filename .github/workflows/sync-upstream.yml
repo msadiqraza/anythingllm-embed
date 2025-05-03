@@ -1,0 +1,77 @@
+# .github/workflows/sync-upstream.yml
+name: Sync Fork with Upstream
+
+# Controls when the workflow will run
+on:
+  # Runs on a schedule (e.g., daily at 3:15 AM UTC) - Adjust as needed
+  # See https://crontab.guru/ for cron syntax help
+  schedule:
+    - cron: '15 3 * * *'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    # Grant permissions for the workflow to checkout code and push changes
+    permissions:
+      contents: write
+
+    steps:
+      # Step 1: Checkout your fork's code
+      - name: Checkout Fork
+        uses: actions/checkout@v4
+        with:
+          # Fetch all history so we can merge or rebase correctly
+          fetch-depth: 0
+          # Use default GITHUB_TOKEN. If push fails later, consider using a PAT
+          # token: ${{ secrets.YOUR_PAT_SECRET_NAME }} # Uncomment if needed
+
+      # Step 2: Configure Git user for commits made by this workflow
+      - name: Set up Git User
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Step 3: Add the original repository as the 'upstream' remote
+      - name: Add Upstream Remote
+        # ===================================================================
+        #  IMPORTANT: REPLACE THE URL BELOW WITH THE ACTUAL URL OF THE
+        #             ORIGINAL REPOSITORY YOU FORKED FROM!
+        # ===================================================================
+        run: git remote add upstream https://github.com/mintplex-labs/anythingllm-embed.git
+
+      # Step 4: Fetch latest changes from the upstream repository
+      - name: Fetch Upstream Changes
+        run: git fetch upstream
+
+      # Step 5: Merge changes from upstream's primary branch into your fork's primary branch
+      - name: Merge Upstream into Main Branch
+        run: |
+          # ===================================================================
+          #  IMPORTANT: REPLACE 'main' BELOW WITH THE NAME OF THE BRANCH
+          #             IN *YOUR* FORK YOU WANT TO UPDATE (e.g., main, master)
+          # ===================================================================
+          git checkout main
+
+          # ===================================================================
+          #  IMPORTANT: REPLACE 'main' AFTER 'upstream/' BELOW WITH THE NAME
+          #             OF THE PRIMARY BRANCH IN THE *UPSTREAM* REPOSITORY
+          #             (e.g., main, master, develop)
+          # ===================================================================
+          git merge upstream/main
+
+          # Note: If merge conflicts occur, this step will fail.
+          # Avoid making diverging commits on your fork's main branch if possible.
+
+      # Step 6: Push the merged changes back to your fork on GitHub
+      - name: Push Changes to Fork
+        run: |
+          # ===================================================================
+          #  IMPORTANT: REPLACE 'main' BELOW WITH THE NAME OF THE BRANCH
+          #             IN *YOUR* FORK YOU ARE UPDATING
+          # ===================================================================
+          git push origin main
+          # This push will trigger the 'publish-build.yml' workflow if changes were merged.

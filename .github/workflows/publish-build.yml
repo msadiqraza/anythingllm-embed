@@ -1,0 +1,41 @@
+name: Create Release with Build Asset (Yarn)
+
+on:
+  push:
+    tags:
+      - 'v*.*.*' # Trigger on version tags like v1.0.0
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions: write-all # Needed to create releases/upload assets
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Specify Node.js version
+          cache: 'yarn'  # <-- Changed to 'yarn'
+
+      - name: Install Dependencies using Yarn
+        run: yarn
+
+      - name: Build Project using Yarn
+        run: yarn build
+
+      - name: Deploy to dist branch
+        uses: peaceiris/actions-gh-pages@v4 # Action to handle deployment
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }} # Use the built-in token for permissions
+          # IMPORTANT: Point this to your actual build output directory!
+          publish_dir: ./dist
+          # The branch name where the build output will be published
+          publish_branch: dist
+          # Creates a clean history on the dist branch each time (recommended)
+          force_orphan: true
+          # Optional: Configure Git user for the commit on the dist branch
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy latest build output' # Optional commit message
