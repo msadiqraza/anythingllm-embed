@@ -21,8 +21,7 @@ const ChatService = {
           const headers = {
             "Authorization": `Bearer ${jwtToken}`,
           };
-          console.log("Headers:", headers);
-          // console.log("Headers:", headers["Authorization"].split(".")[1]);
+          console.log("Headers:", headers["Authorization"].split(".")[1]);
           resolve(headers);
         } else {
           attempts++;
