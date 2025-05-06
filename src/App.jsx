@@ -7,6 +7,7 @@ import ChatWindow from "./components/ChatWindow";
 import { useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
 import i18next from "@/i18n";
+import { setAuthTokenForChatService } from "./models/chatService";
 
 export default function App() {
   const { isChatOpen, toggleOpenChat } = useOpenChat();
@@ -17,6 +18,10 @@ export default function App() {
     if (embedSettings.openOnLoad === "on") {
       toggleOpenChat(true);
     }
+
+    const jwtToken = embedSettings.jwtToken;
+    setAuthTokenForChatService(jwtToken);
+
   }, [embedSettings.loaded]);
 
   if (!embedSettings.loaded) return null;

@@ -1,10 +1,46 @@
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { v4 } from "uuid";
 
+let jwtToken = "";
+
+const TOKEN_RETRY_INTERVAL_MS = 100;
+const MAX_TOKEN_WAIT_DURATION_MS = 10000;
+
+export function setAuthTokenForChatService(token) {
+  jwtToken = token;
+}
+
 const ChatService = {
+  getHeaders: async function () {
+    return new Promise((resolve, reject) => {
+      let attempts = 0;
+      const maxAttempts = MAX_TOKEN_WAIT_DURATION_MS / TOKEN_RETRY_INTERVAL_MS;
+
+      const tryToGetHeaders = () => {
+        if (jwtToken) {
+          const headers = {
+            "Authorization": `Bearer ${jwtToken}`,
+          };
+          resolve(headers);
+        } else {
+          attempts++;
+
+          if (attempts <= maxAttempts) {
+            setTimeout(tryToGetHeaders, TOKEN_RETRY_INTERVAL_MS);
+          } else {
+            reject(new Error("JWT token not available after maximum wait time."));
+          }
+        }
+      };
+      tryToGetHeaders();
+    });
+  },
+
   embedSessionHistory: async function (embedSettings, sessionId) {
     const { embedId, baseApiUrl } = embedSettings;
-    return await fetch(`${baseApiUrl}/${embedId}/${sessionId}`)
+    return await fetch(`${baseApiUrl}/${embedId}/${sessionId}`, {
+      headers: await this.getHeaders(),
+    })
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error("Invalid response from server");
@@ -27,6 +63,7 @@ const ChatService = {
     const { baseApiUrl, embedId } = embedSettings;
     return await fetch(`${baseApiUrl}/${embedId}/${sessionId}`, {
       method: "DELETE",
+      headers: await this.getHeaders(),
     })
       .then((res) => res.ok)
       .catch(() => false);
@@ -42,6 +79,7 @@ const ChatService = {
     const ctrl = new AbortController();
     await fetchEventSource(`${baseApiUrl}/${embedId}/stream-chat`, {
       method: "POST",
+      headers: await this.getHeaders(),
       body: JSON.stringify({
         message,
         sessionId,
