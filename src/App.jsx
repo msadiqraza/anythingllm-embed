@@ -20,6 +20,7 @@ export default function App() {
     }
 
     const jwtToken = embedSettings.jwtToken;
+    console.log("JWT Token:", jwtToken);
     setAuthTokenForChatService(jwtToken);
 
   }, [embedSettings.loaded]);
